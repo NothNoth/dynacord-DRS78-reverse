@@ -140,21 +140,19 @@ This analog switch will work as follow:
 
 Depending on the flip flop status, we pick the knob position for delay 1-2 (effect board) or 3 (display board).
 All those 3 outputs (2/3/9) are merged and sent to MC14538B, pin 1/2 and thus used to control the oscillator speed on channel A. In pratice, only one of the 3 inputs is selected (delay 1/2/3 but not a mix of them). 
+Switching between the 3 delays actually updates the display and picks another set of resistors.
 
 For Qa: T = Rx . Cx. Rx value depends on the Flip Flop state.
 
-When using the two fixed values states:
-
-    T = Rx . Cx = (4700 + 4700) * 0,00000033 = 0,003102s
-
-When setting up using the delay knob (trimmer set to mid position at 250k), the clock value for min max positions are:
+When setting up using the delay knobs (trimmer set to mid position at 250k), the clock value for min max positions are:
 
     Tmin = Rx . Cx = (250000 + 560000) * 0,00000033 = 0,267s
     Tmax = Rx . Cx = (1/(1/(250000 + 560000) + 1/(1000000))) * 0,00000033 = 447513,812201672720618 * 0,00000033 = 0,148s
 
 
-In practivce, when delay is set to minimal value (007ms), the MC14538B Qa output (pin 6) show a 5V signal for 3ms every 343ms. 
+In practice, when delay is set to minimal value (007ms), the MC14538B Qa output (pin 6) show a 5V signal for 3ms every 343ms. 
 ![DS1Z_QuickPrint2.png](DS1Z_QuickPrint2.png)
+
 When delay is set to maximal value (337ms), the MC14538B Qa output (pin 6) show a 5V signal for 150ms every 343ms. 
 ![DS1Z_QuickPrint3.png](DS1Z_QuickPrint3.png)
 
@@ -169,7 +167,6 @@ Before being sent to the __KONF__ output, the signal is inverted (J906 pin 13).
 
 TODO: Tout ce qui vient de BE (320m notamment) a plein de bruit et fout le boxon.
 
-TODO: It looks as if the two first analog switches will deliver 2*4k7 ohm values when the configurable one on the right will depend on the knob position. Thus, how does recall works? 
 
 ### Switching from reverb to delay mode 
 
