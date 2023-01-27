@@ -79,6 +79,9 @@ The wet signal comes as a mono signal from BD pin 8. In order to arrange a stere
 
 Dyn inp and Dyn out are simply specific connectors from the above inputs/outputs.
 
+This board also has deported "universal input/output" on the front panel (effect board), using the BD connector.
+
+
 __Testing:__ Connect an audio source on the mono input of the unit. Check the "direct mono" output. If the signal is there, good news all the OpAmp on this board to the "Effect send" are fine.
 Then check the BD connector PINs 1/2 to make sure you signal is still there.
 Now make sure your wet signal is found on the connector BD 8/9. If it's there, also check the "delay mono" output.
@@ -180,16 +183,25 @@ This board receives via the BE cable signals __DELE DELF DECE DECF__. Those are 
 
 ## Effect board (Effektplatine 89007)
 
-This board is the front panel left board and is connected to the display board via a set of jumper wires.
+__Page:__ 41
+
+__Purpose:__ This board is the front panel left board and is connected to the display board via a set of jumper wires. Its main use is to receive the dry and wet audio signal and reinject it depending on the current settings (duration, level...)
 
 The BA connector sends and receives data from the filter board.
 
 This board handles a few circuit parts that did not fit on the display board: delay 1 and 2 knobs, LEDs, Delay/Decay settings positions.
 
-The Universal input on front panel goes through an opamp controled by the input volume kob (marked "volume" on the schematics). Then we go through an EQ section with another opamlp and the bass/treble knobs. This universal input is at the bottom left of the front panel.
+### Universal in/out
 
+The Universal input on front panel goes through an opamp controled by the input volume kob (marked "volume" on the schematics). Then we go through an EQ section with another opamlp and the bass/treble knobs. This universal input is physically  at the bottom left of the front panel.
+
+![effect-universal.png](effect-universal.png)
 
 The universal out (marked "mixed out) on the front panel comes directly from the BB connector (1/2).
+
+The BB connector goest directly back to the "back panel", thus these "universal in/outs" are just deported connectors.
+
+### Feedback
 
 From connector BA, inputs 4/5 ("vom filter") we receive the computed delay/echo.  
 This signal goes through two potentiometers:
@@ -197,28 +209,39 @@ This signal goes through two potentiometers:
   - labeled "echo" on the diagram: the echo duration knob
   - labeled "duration" on the diagram: the delay duration knob
 
+![effect-duration.png](effect-duration.png)
+
 We find two relays, controled by the echo/reverb flags. Depending on the unit status, one of the knob value is ignored.
 The signal (100% wet) then goes through a line driver opamp and is sent to:
 
   - Effect send via BB 8/9, thus to the back panel 
   - Filter ("zum filter") via BA 1/3
 
+### Level
+
 The "vom filter" signal algo goes through two potentiometers:
   - labeled "Return rev" on the diagram: the reverb "return" knob
   - labeled "return echo" on the diagram: the echo "return" knob
+
+![effect-level.png](effect-level.png)
 
 The reverb return value is again ignored depending on a relay controled by the reverb flag.
 The delay return value goes through a __E KLIN__ - __E KLOUT__ before a similar relay.
 
 The __EKLIN__/__EKLOUT__ is located on the "display board" (front panel, right) and is actually composed of the EQ section (the two bass/treble knobs at the right of the unit front panel).
 
+The __EFF ON/OFF__ (16) is connected to the ground when the effect is disabled, nulling the output. The carrier board will generate the audio output signals from this one (mixed L/R/mono, delay L/R/mono).
+The On/Off effect switch is deported on the "display board":
 
-Flows:
+![effect-onoff.png](effect-onoff.png)
+
+### Flows recap
 
 |  INPUT | OUTPUT | Process |
 | ------- | ------ | ----- |
 | Vom Filter (BA 4/5) | Zum filter (BA 1/3) | The signal is attenuated with the echo or reverb duration knobs, mixed with the actual dry signal (Eff send BB 8/9) and sent to filter. We continuously reinject the attenuated previous signal to the filter. |
 | Vom Filter (BA 4/5) | Eff return (BB 6/7) | The signal is attenuated with the echo or reverb return knobs and sent to the carrier board. On delay mode, the EQ is applied. The "EFF ON/OFF" (16) is connected to the ground when the effect is disabled, nulling the output. The carrier board will generate the audio output signals from this one (mixed L/R/mono, delay L/R/mono). |
+
 
 ## Connectors
 
@@ -332,12 +355,12 @@ On the display board:
 ### BE
 
   __From:__ Carrier board
-  __To:__ 
+  __To:__ Effect board
 
   | Pin   | Usage                                  | From          | To            |
   | ----- | -------------------------------------- | ------------- | ------------- |
-  | 1     | DELE (Delay setting on effect board)   |               |               |
-  | 2     | DELF (Delay setting on effect board) |               |               |
+  | 1     | DELE (Delay setting on effect board)   | Effect board  | Carrier board |
+  | 2     | DELF (Delay setting on effect board)   | Effect board  | Carrier board |
   | 3     | 320m (to multivibrator)                | Carrier board | Display board |
   | 4     | NC                                     |               |               |
   | 5     | NC                                     |               |               |
@@ -350,8 +373,8 @@ On the display board:
   | 12    | NC                                     |               |               |
   | 13    | EREV (Delay/reverb mode boolean)       | Display board | Carrier board |
   | 14    | Konf (delay setting)                   | Display board | Carrier board |
-  | 15    | DECF (Decay setting on effect board)   |               |               |
-  | 16    | DECE (Decay setting on effect board)   |               |               |
+  | 15    | DECF (Decay setting on effect board)   | Display board | Carrier board |
+  | 16    | DECE (Decay setting on effect board)   | Display board | Display board |
   
 ### BF
 
@@ -387,20 +410,21 @@ On the display board:
   
   ## Lexicon
 
-  | Name  | Description              |
-  | ----- | ----------------------- |
-  | REP     | Repeat mode flag                  |
-  | EKL IN  | Audio signal sent to the main EQ |
-  | EKL OUT | Audio signal returning from the main EQ |
-  | DELE    | The Delay ms knob position (as a resistor value) |
-  | DELF    | The Delay ms knob position (as a resistor value) |
-  | DECE    | The Decay ms knob position (as a resistor value) |
-  | DECF    | The Decay ms knob position (as a resistor value) |
-  | EREV    | The Reverb/Delay mode flag |
-  | EFF SEND | The dry signal coming from the back panel |
-  | EFF RETURN | The wet signal returning to the back panel |
-  | ERIMP | TODO: a fixed value clock?    |
-  | 320m  | TODO: ERIMP clock stop flag?  |
-  | KONF  | The clock signal configured with the delay time knob |
-  | SYR   | TODO: a clock?  |
-  | VCO   | TODO: ?  |
+  | Name        | Description                                                    |
+  | ----------- | -------------------------------------------------------------- |
+  | REP         | Repeat mode flag                                               |
+  | EKL IN      | Audio signal sent to the main EQ                               |
+  | EKL OUT     | Audio signal returning from the main EQ                        |
+  | DELE        | The Delay ms knob position (as a resistor value)               |
+  | DELF        | The Delay ms knob position (as a resistor value)               |
+  | DECE        | The Decay ms knob position (as a resistor value)               |
+  | DECF        | The Decay ms knob position (as a resistor value)               |
+  | EREV        | The Reverb/Delay mode flag                                     |
+  | EFF SEND    | The dry signal coming from the back panel                      |
+  | EFF RETURN  | The wet signal returning to the back panel                     |
+  | EFF ON/OFF  | The on/off sitch on the display panel sent to the effect panel | 
+  | ERIMP       | TODO: a fixed value clock?                                     |
+  | 320m        | TODO: ERIMP clock stop flag?                                   |
+  | KONF        | The clock signal configured with the delay time knob           |
+  | SYR         | TODO: a clock?                                                 |
+  | VCO         | TODO: ?                                                        |
