@@ -108,6 +108,7 @@ Those clocks are set using a capacitor and a resistor connected respectively on 
 ![display-clockb.png](display-clockb.png)
 
 The B channel of MC14538B works as follow:
+
 ![display-mc14538b-b.png](display-mc14538b-b.png)
 
 The Qb clock on PIN 9 (__ERIMP__) is fixed, since capacitor/resistor on pins 14/15 have fixed values.
@@ -122,12 +123,15 @@ For Qb:
 ![display-clocka.png](display-clocka.png)
 
 The A channel of MC14538B works as follow:
+
 ![display-mc14538b-a.png](display-mc14538b-a.png)
 
 The Qa clock is controled by the capacitor and resistor connected on pins 1/2. While the capacitor is fixed, the resistor depends on the state of a series of flip flop switches.
 
 When pushing the Delay 1-2-3 button, a set of flip flops and binary logic is used to drive a [HD14016B](HD14016B.PDF) (J905).
+
 ![display-hd14016b.png](display-hd14016b.png)
+
 This analog switch will work as follow:
 
   - if control on pin 13 is set, input 1 (from left front board jumper 9) is sent to output 2
@@ -137,12 +141,26 @@ This analog switch will work as follow:
 Depending on the flip flop status, we pick the knob position for delay 1-2 (effect board) or 3 (display board).
 All those 3 outputs (2/3/9) are merged and sent to MC14538B, pin 1/2 and thus used to control the oscillator speed on channel A. In pratice, only one of the 3 inputs is selected (delay 1/2/3 but not a mix of them). 
 
-When delay is set to minimal value (007ms), the MC14538B Qa output (pin 6) show a 5V signal for 3ms every 343ms. ![DS1Z_QuickPrint2.png](DS1Z_QuickPrint2.png)
-When delay is set to maximal value (337ms), the MC14538B Qa output (pin 6) show a 5V signal for 150ms every 343ms. ![DS1Z_QuickPrint3.png](DS1Z_QuickPrint3.png)
-
-The Qa inverted used on the circuit shows the inverted signal. ![DS1Z_QuickPrint4.png](DS1Z_QuickPrint4.png)
-
 For Qa: T = Rx . Cx. Rx value depends on the Flip Flop state.
+
+When using the two fixed values states:
+
+    T = Rx . Cx = (4700 + 4700) * 0,00000033 = 0,003102s
+
+When setting up using the delay knob (trimmer set to mid position at 250k), the clock value for min max positions are:
+
+    Tmin = Rx . Cx = (250000 + 560000) * 0,00000033 = 0,267s
+    Tmax = Rx . Cx = (1/(1/(250000 + 560000) + 1/(1000000))) * 0,00000033 = 447513,812201672720618 * 0,00000033 = 0,148s
+
+
+In practivce, when delay is set to minimal value (007ms), the MC14538B Qa output (pin 6) show a 5V signal for 3ms every 343ms. 
+![DS1Z_QuickPrint2.png](DS1Z_QuickPrint2.png)
+When delay is set to maximal value (337ms), the MC14538B Qa output (pin 6) show a 5V signal for 150ms every 343ms. 
+![DS1Z_QuickPrint3.png](DS1Z_QuickPrint3.png)
+
+The Qa inverted used on the circuit shows the inverted signal.
+![DS1Z_QuickPrint4.png](DS1Z_QuickPrint4.png)
+
 
 We can see that Qa is the current setting value, sent to the Konf output and the circuit in charge of controlling the display.
 
