@@ -175,6 +175,11 @@ When the Reverb/Delay button is pressed, it seems to drive the __EREV__ output f
 
 ![display-switch.png](display-switch.png)
 
+The SYR clock:
+
+![DS1Z_QuickPrint5.png](DS1Z_QuickPrint5.png)
+
+
 ### Repeat
 
 The Repeat button is using a set of flip flop and will export an on/off boolean on output __REP__ (BE pin 7):
@@ -256,6 +261,111 @@ The On/Off effect switch is deported on the "display board":
 | ------- | ------ | ----- |
 | Vom Filter (BA 4/5) | Zum filter (BA 1/3) | The signal is attenuated with the echo or reverb duration knobs, mixed with the actual dry signal (Eff send BB 8/9) and sent to filter. We continuously reinject the attenuated previous signal to the filter. |
 | Vom Filter (BA 4/5) | Eff return (BB 6/7) | The signal is attenuated with the echo or reverb return knobs and sent to the carrier board. On delay mode, the EQ is applied. The "EFF ON/OFF" (16) is connected to the ground when the effect is disabled, nulling the output. The carrier board will generate the audio output signals from this one (mixed L/R/mono, delay L/R/mono). |
+
+### The Memory Board
+
+
+SINF signal:
+
+![DS1Z_QuickPrint21.png](DS1Z_QuickPrint21.png)
+
+KONT signal:
+
+![DS1Z_QuickPrint22.png](DS1Z_QuickPrint22.png)
+
+320 signal:
+
+![DS1Z_QuickPrint23.png](DS1Z_QuickPrint23.png)
+
+160m signal:
+
+![DS1Z_QuickPrint24.png](DS1Z_QuickPrint24.png)
+
+KONF with 9ms delay:
+
+![DS1Z_QuickPrint25.png](DS1Z_QuickPrint25.png)
+
+KONF with 200ms delay:
+
+![DS1Z_QuickPrint26.png](DS1Z_QuickPrint26.png)
+
+KONF with 320ms delay:
+
+![DS1Z_QuickPrint27.png](DS1Z_QuickPrint27.png)
+
+
+### The Filter Board
+A sinusoidal test signal is sent on the front panel input.
+
+NF In signal:
+
+![DS1Z_QuickPrint18.png](DS1Z_QuickPrint18.png)
+
+NF Out signal:
+
+![DS1Z_QuickPrint17.png](DS1Z_QuickPrint17.png)
+
+NFAD signal:
+
+![DS1Z_QuickPrint19.png](DS1Z_QuickPrint19.png)
+
+NFDA signal:
+
+![DS1Z_QuickPrint20.png](DS1Z_QuickPrint20.png)
+
+
+### Other measurements
+
+## Osillo
+
+SYR pin 3 (J910):
+
+![DS1Z_QuickPrint5.png](DS1Z_QuickPrint5.png)
+
+Carrier board 160m:
+
+![DS1Z_QuickPrint6.png](DS1Z_QuickPrint6.png)
+
+Carrier board 320m :
+
+![DS1Z_QuickPrint7.png](DS1Z_QuickPrint7.png)
+
+Start
+
+![DS1Z_QuickPrint8.png](DS1Z_QuickPrint8.png)
+
+Sync (BH 18)
+
+![DS1Z_QuickPrint9.png](DS1Z_QuickPrint9.png)
+
+800k
+
+![DS1Z_QuickPrint10.png](DS1Z_QuickPrint10.png)
+
+SOF (55)
+
+![DS1Z_QuickPrint11.png](DS1Z_QuickPrint11.png)
+
+SOFL (54)
+
+![DS1Z_QuickPrint12.png](DS1Z_QuickPrint12.png)
+
+SOFU (53)
+
+![DS1Z_QuickPrint13.png](DS1Z_QuickPrint13.png)
+
+SOT (56)
+
+![DS1Z_QuickPrint14.png](DS1Z_QuickPrint14.png)
+
+ARIF (57)
+
+![DS1Z_QuickPrint15.png](DS1Z_QuickPrint15.png)
+
+CLOCK
+
+![DS1Z_QuickPrint15.png](DS1Z_QuickPrint15.png)
+
 
 
 ## Connectors
@@ -443,3 +553,5 @@ On the display board:
   | KONF        | The clock signal configured with the delay time knob           |
   | SYR         | TODO: a clock?                                                 |
   | VCO         | TODO: ?                                                        |
+
+
